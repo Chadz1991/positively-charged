@@ -23,6 +23,11 @@ export default function HomeScreen({ navigation }) {
       <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
         <Text style={{ marginTop: 20, fontSize: 20, color: theme.accent }}>Settings</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => navigation.navigate('Subscription')}>
+        <Text style={{ marginTop: 20, fontSize: 20, color: theme.accent }}>Subscription</Text>
+      </TouchableOpacity>
+
     </View>
   );
 }
