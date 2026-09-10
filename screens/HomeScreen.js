@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { themes } from '../theme/SeasonalThemes';
 import { getDailyQuote, getSeasonalQuote } from '../utils/getDailyQuote';
 import { getSeason } from '../utils/getSeason';
+import { recordQuoteRefresh } from '../analytics/AnalyticsManager';
 
 export default function HomeScreen({ navigation }) {
   const season = getSeason();
@@ -17,11 +18,12 @@ export default function HomeScreen({ navigation }) {
     setSeasonalQuote(getSeasonalQuote(season));
   }, []);
 
-  const loadQuoteOfTheDay = () => {
-    const { quote, category } = getDailyQuote();
-    setQuote(quote);
-    setCategory(category);
-  };
+ const loadQuoteOfTheDay = () => {
+  const { quote, category } = getDailyQuote();
+  setQuote(quote);
+  setCategory(category);
+  recordQuoteRefresh();
+};
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.background, padding: 30 }}>
