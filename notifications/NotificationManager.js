@@ -2,6 +2,7 @@ import * as Notifications from 'expo-notifications';
 import { getDailyQuote } from '../utils/getDailyQuote';
 import { getSeason } from '../utils/getSeason';
 import { getSeasonalQuote } from '../utils/getDailyQuote';
+import { recordNotificationDelivered } from '../analytics/AnalyticsManager';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -9,6 +10,10 @@ Notifications.setNotificationHandler({
     shouldPlaySound: false,
     shouldSetBadge: false,
   }),
+});
+
+Notifications.addNotificationReceivedListener(() => {
+  recordNotificationDelivered();
 });
 
 export async function registerForPushNotifications() {
@@ -24,14 +29,15 @@ export async function scheduleDailyQuote(time = { hour: 8, minute: 0 }) {
   const seasonal = getSeasonalQuote(season);
 
   await Notifications.scheduleNotificationAsync({
-    content: {
-      title: `Daily Motivation (${season})`,
-      body: `${quote} — ${category.toUpperCase()} | ${seasonal}`,
-    },
-    trigger: {
-      hour: time.hour,
-      minute: time.minute,
-      repeats: true,
-    },
-  });
+  content: {
+    title: `Daily Motivation (${season})`,
+    body: `${quote} — ${category.toUpperCase()} | ${seasonal}`,
+    data: { delivered: true }
+  },
+  trigger: {
+    hour: time.hour,
+    minute: time.minute,
+    repeats: true,
+  },
+});
 }
