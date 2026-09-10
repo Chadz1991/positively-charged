@@ -20,19 +20,23 @@ export default function JournalScreen() {
   };
 
   const saveEntry = async () => {
-    if (!entry.trim()) return;
+  if (!entry.trim()) return;
 
-    const newEntry = {
-      id: Date.now(),
-      text: entry,
-      date: new Date().toLocaleDateString(),
-    };
-
-    const updated = [...savedEntries, newEntry];
-    setSavedEntries(updated);
-    await AsyncStorage.setItem('journalEntries', JSON.stringify(updated));
-    setEntry('');
+  const newEntry = {
+    id: Date.now(),
+    text: entry,
+    date: new Date().toLocaleDateString(),
   };
+
+  const updated = [...savedEntries, newEntry];
+  setSavedEntries(updated);
+
+  await AsyncStorage.setItem('journalEntries', JSON.stringify(updated));
+
+  await recordJournalEntry();   // analytics tracking
+
+  setEntry('');
+};
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: theme.background, padding: 30 }}>
