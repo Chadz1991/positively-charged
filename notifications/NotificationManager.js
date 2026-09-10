@@ -1,6 +1,8 @@
 import * as Notifications from 'expo-notifications';
+import { getDailyQuote } from '../utils/getDailyQuote';
+import { getSeason } from '../utils/getSeason';
+import { getSeasonalQuote } from '../utils/getDailyQuote';
 
-// How notifications behave when received
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -9,20 +11,22 @@ Notifications.setNotificationHandler({
   }),
 });
 
-// Request permission
 export async function registerForPushNotifications() {
   const { status } = await Notifications.requestPermissionsAsync();
   return status === 'granted';
 }
 
-// Schedule daily notification
 export async function scheduleDailyQuote(time = { hour: 8, minute: 0 }) {
   await Notifications.cancelAllScheduledNotificationsAsync();
 
+  const { quote, category } = getDailyQuote();
+  const season = getSeason();
+  const seasonal = getSeasonalQuote(season);
+
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: 'Daily Motivation',
-      body: 'Your daily boost is ready ✨',
+      title: `Daily Motivation (${season})`,
+      body: `${quote} — ${category.toUpperCase()} | ${seasonal}`,
     },
     trigger: {
       hour: time.hour,
