@@ -14,9 +14,8 @@ export default function App() {
     init();
   }, []);
 
-  return (
-    <NavigationContainer>
-      <AppNavigator />
-    </NavigationContainer>
-  );
-}
+ return (
+  <NavigationContainer>
+    <AppNavigator />
+  </NavigationContainer>
+);
