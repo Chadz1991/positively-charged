@@ -1,7 +1,7 @@
 {
   "name": "positively-charged",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "expo/AppEntry",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
@@ -10,10 +10,10 @@
   },
   "dependencies": {
     "expo": "~57.0.0",
-    "expo-notifications": "~0.30.0",
-    "@react-native-async-storage/async-storage": "~1.23.0",
     "react": "18.2.0",
     "react-native": "0.76.0",
+    "expo-notifications": "~0.30.0",
+    "@react-native-async-storage/async-storage": "~1.23.0",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.20"
   },
